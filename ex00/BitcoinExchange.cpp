@@ -267,32 +267,14 @@ Unit BitcoinExchange::search_for_date_and_value(Unit input) {
 	long *date = b->getDate();
 	// long *date_next = b_next->getDate();
 
-	if(input_date[0] >= date[0])
-	{
-		if(input_date[1] >= date[1])
-		{
-			if(input_date[2] >= date[2])
-			{
-			}else
-				return *b;
-		}else
-			return *b;
-	}else
+	if((input_date[0] * 365 + input_date[1] * 30 + input_date[2])
+		< (date[0] * 365 + date[1] * 30 + date[2]))
 		return *b;
 	e--;
-	if(input_date[0] <= e->getDate()[0])
-	{
-		if(input_date[1] <= e->getDate()[1])
-		{
-			if(input_date[2] <= e->getDate()[2])
-			{
-			}else
-				return *e;
-		}else
-			return *e;
-	}else
+	if((input_date[0] * 365 + input_date[1] * 30 + input_date[2])
+		> (e->getDate()[0] * 365 + e->getDate()[1] * 30 + e->getDate()[2]))
 		return *e;
-
+	e++;
 	while(b_next != e)
 	{
 		long *date = b->getDate();
@@ -305,13 +287,14 @@ Unit BitcoinExchange::search_for_date_and_value(Unit input) {
 				{
 					return *b;
 				}
-
-				if((input_date[2] + input_date[1] * 30) > (date[2] + date[1] * 30)
-					&& (input_date[2] + input_date[1] * 30) < (date_next[2] + date_next[1] * 30))
-				{
-					return *b_next;
-				}
 			}
+		}
+		if((input_date[2] + input_date[1] * 30 + input_date[0] * 365) 
+			>= (date[2] + date[1] * 30 + date[0] * 365)
+			&& (input_date[2] + input_date[1] * 30 + input_date[0] * 365) 
+			<= (date_next[2] + date_next[1] * 30 + date_next[0] * 365))
+		{
+			return *b_next;
 		}
 		b++;
 		b_next++;

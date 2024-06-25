@@ -1,8 +1,14 @@
 #include "BitcoinExchange.hpp"
 #include <iostream>
 
-int main() {
-	MyFile file("../test_input.txt");
+int main(int arg_num, char **args) {
+	
+	if (arg_num != 2) {
+		std::cout << "Invalid number of arguments\n";
+		return 1;
+	}
+
+	MyFile file(args[1]);
 	MyFile file2("../data.csv");
 
 	BitcoinExchange exchange;
@@ -34,8 +40,8 @@ int main() {
 		if (result.getDate()[0] == 0)
 			std::cout << "No data found\n";
 		else
-			std::cout << result.getDate()[0] << "-" << result.getDate()[1] 
-			<< "-" << result.getDate()[2] << " => " << input.getValue() 
+			std::cout << input.getDate()[0] << "-" << input.getDate()[1] 
+			<< "-" << input.getDate()[2] << " => " << input.getValue() 
 			<< " = " << result.getValue() * input.getValue() << "\n";
 		i++;
 	}
