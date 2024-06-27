@@ -2,7 +2,7 @@ SRCS=  main.cpp PmergeMe.cpp
 OBJS= $(SRCS:.cpp=.o)
 CFLAGS= -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g
 CPP= c++
-NAME= RPN
+NAME= PmergeMe
 
 .PHONY: clean
 
