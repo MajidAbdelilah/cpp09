@@ -1,8 +1,27 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include "PmergeMe.hpp"
 
-#define K 5
+long long get_number(std::string str)
+{
+	// // std::cout<< str << "\n";
+	unsigned long i = 0;
+	if(str[i] == '+')
+		i++;
+	while(i < str.size() && std::isdigit(str[i])) {
+		i++;
+	}
+	if(i != str.size())
+		throw std::invalid_argument("Error: |" + str + "| is not a valid integer.");
+
+	long long res = strtoll(str.c_str(), NULL, 10);
+	
+	if(res < std::numeric_limits<int>::min() || res > std::numeric_limits<int>::max() || str.size() > 11) {
+		throw std::invalid_argument("Error: " + str + " is not a valid integer.");
+	}
+	return res;
+}
 
 void insertionSort_vec(std::vector<int> &A, int p, int q) {
     for (int i = p; i < q; i++) {
@@ -17,16 +36,16 @@ void insertionSort_vec(std::vector<int> &A, int p, int q) {
     // int[] temp = Arrays.copyOfRange(A, p, q +1);
     std::vector<int> tmp;
 	tmp.resize(((q +1) - p));
-	std::cout << p << " " << ((q +1) - p) << "\n";
+	// std::cout<< p << " " << (q +1) << "\n";
 	// memcpy(temp, A + p, sizeof(int) * ((q +1) - p));
 	std::copy(A.begin() + p, A.begin() + ((q +1)), tmp.begin());
 	unsigned long i = 0;
 	while(i < tmp.size())
 	{
-		std::cout << tmp[i] << " ";
+		// std::cout<< tmp[i] << " ";
 		i++;
 	}
-	std::cout << "\n";
+	// std::cout<< "\n";
     // Arrays.stream(temp).forEach(i -> System.out.print(i + " "));
     // System.out.println();
 }
@@ -45,7 +64,7 @@ void merge_vec(std::vector<int> &A, int p, int q, int r) {
 	// memcpy(RA, A + (q + 1), sizeof(int) * ((r + 1) - (q + 1)));
     std::copy(A.begin() + (q + 1), A.begin() + ((r + 1)), RA.begin());
 
-	std::cout << (q + 1) << "\n" << ((r + 1) - (q + 1)) << "\n";
+	// std::cout<< (q + 1) << "\n" << ((r + 1)) << "\n";
 	int RIDX = 0;
     int LIDX = 0;
     for (int i = p; i < r - p + 1; i++) {
@@ -74,13 +93,13 @@ void sort_vec(std::vector<int> &A, int p, int r) {
     } else {
         insertionSort_vec(A, p, r);
 		unsigned long i = 0;
-		std::cout << "----------\n";
+		// std::cout<< "----------\n";
 		while(i < A.size())
 		{
-		 std::cout << A[i] << " "; 
+		 // std::cout<< A[i] << " "; 
 			i++;
 		}
-		std::cout << "\n----------\n";
+		// std::cout<< "\n----------\n";
     }
 }
 
@@ -97,16 +116,16 @@ void insertionSort_deq(std::deque<int> &A, int p, int q) {
     // int[] temp = Arrays.copyOfRange(A, p, q +1);
     std::deque<int> tmp;
 	tmp.resize(((q +1) - p));
-	std::cout << p << " " << ((q +1) - p) << "\n";
+	// std::cout<< p << " " << (q +1) << "\n";
 	// memcpy(temp, A + p, sizeof(int) * ((q +1) - p));
 	std::copy(A.begin() + p, A.begin() + ((q +1)), tmp.begin());
 	unsigned long i = 0;
 	while(i < tmp.size())
 	{
-		std::cout << tmp[i] << " ";
+		// std::cout<< tmp[i] << " ";
 		i++;
 	}
-	std::cout << "\n";
+	// std::cout<< "\n";
     // Arrays.stream(temp).forEach(i -> System.out.print(i + " "));
     // System.out.println();
 }
@@ -125,7 +144,7 @@ void merge_deq(std::deque<int> &A, int p, int q, int r) {
 	// memcpy(RA, A + (q + 1), sizeof(int) * ((r + 1) - (q + 1)));
     std::copy(A.begin() + (q + 1), A.begin() + ((r + 1)), RA.begin());
 
-	std::cout << (q + 1) << "\n" << ((r + 1) - (q + 1)) << "\n";
+	// std::cout<< (q + 1) << "\n" << ((r + 1)) << "\n";
 	int RIDX = 0;
     int LIDX = 0;
     for (int i = p; i < r - p + 1; i++) {
@@ -154,52 +173,13 @@ void sort_deq(std::deque<int> &A, int p, int r) {
     } else {
         insertionSort_deq(A, p, r);
 		unsigned long i = 0;
-		std::cout << "----------\n";
+		// std::cout<< "----------\n";
 		while(i < A.size())
 		{
-		 std::cout << A[i] << " "; 
+		 // std::cout<< A[i] << " "; 
 			i++;
 		}
-		std::cout << "\n----------\n";
+		// std::cout<< "\n----------\n";
     }
 }
 
-int main() {
-    std::vector<int> vec;
-	int arr[9] = { 2, 5, 1, 6, 7, 3, 8, 4, 9 };
-    
-	int i = 0;
-	while(i < 9)
-	{
-		vec.push_back(arr[i]);
-		i++;
-	}
-	std::deque<int> deq(vec.begin(), vec.end());
-	i = 0;
-	while(i < 9)
-	{
-		std::cout << vec[i] << " ";
-		i++;
-	}
-	std::cout << "\n";
-	sort_vec(vec, 0, vec.size() - 1);
-	i = 0;
-	std::cout << "sorted = ";
-	while(i < 9)
-	{
-		std::cout << vec[i] << " ";
-		i++;
-	}
-	std::cout << "\n";
-    sort_deq(deq, 0, deq.size() - 1);
-	i = 0;
-	std::cout << "sorted = ";
-	while(i < 9)
-	{
-		std::cout << deq[i] << " ";
-		i++;
-	}
-	std::cout << "\n";
-    
-	// Arrays.stream(A).forEach(i -> System.out.print(i + " "));
-}
