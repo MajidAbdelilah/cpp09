@@ -50,39 +50,61 @@ void insertionSort_vec(std::vector<int> &A, int p, int q) {
     // System.out.println();
 }
 
-void merge_vec(std::vector<int> &A, int p, int q, int r) {
-    int n1 = q - p + 1;
-    int n2 = r - q;
-    // int[] LA = Arrays.copyOfRange(A, p, q +1);
-    std::vector<int> LA;
-	LA.resize(((q + 1) - p));
-	// memcpy(LA, A + p, sizeof(int) * ((q + 1) - p));
-    std::copy(A.begin() + p, A.begin() + ((q + 1)), LA.begin());
-	// int[] RA = Arrays.copyOfRange(A, q+1, r +1);
-    std::vector<int> RA;
-	RA.resize(((r + 1) - (q + 1)));
-	// memcpy(RA, A + (q + 1), sizeof(int) * ((r + 1) - (q + 1)));
-    std::copy(A.begin() + (q + 1), A.begin() + ((r + 1)), RA.begin());
-
-	// std::cout<< (q + 1) << "\n" << ((r + 1)) << "\n";
-	int RIDX = 0;
-    int LIDX = 0;
-    for (int i = p; i < r - p + 1; i++) {
-        if (RIDX == n2) {
-            A[i] = LA[LIDX];
-            LIDX++;
-        } else if (LIDX == n1) {
-            A[i] = RA[RIDX];
-            RIDX++;
-        } else if (RA[RIDX] > LA[LIDX]) {
-            A[i] = LA[LIDX];
-            LIDX++;
-        } else {
-            A[i] = RA[RIDX];
-            RIDX++;
-        }
-    }
-}
+void merge_vec(std::vector<int> &arr, int l, int m, int r) 
+{ 
+	// std::cout << "merged\n";
+    int i, j, k; 
+    int n1 = m - l + 1; 
+    int n2 = r - m; 
+  
+    // Create temp arrays 
+    int L[n1], R[n2]; 
+  
+    // Copy data to temp arrays 
+    // L[] and R[] 
+    for (i = 0; i < n1; i++) 
+        L[i] = arr[l + i]; 
+    for (j = 0; j < n2; j++) 
+        R[j] = arr[m + 1 + j]; 
+  
+    // Merge the temp arrays back 
+    // into arr[l..r] 
+    // Initial index of first subarray 
+    i = 0; 
+  
+    // Initial index of second subarray 
+    j = 0; 
+  
+    // Initial index of merged subarray 
+    k = l; 
+    while (i < n1 && j < n2) { 
+        if (L[i] <= R[j]) { 
+            arr[k] = L[i]; 
+            i++; 
+        } 
+        else { 
+            arr[k] = R[j]; 
+            j++; 
+        } 
+        k++; 
+    } 
+  
+    // Copy the remaining elements 
+    // of L[], if there are any 
+    while (i < n1) { 
+        arr[k] = L[i]; 
+        i++; 
+        k++; 
+    } 
+  
+    // Copy the remaining elements of 
+    // R[], if there are any 
+    while (j < n2) { 
+        arr[k] = R[j]; 
+        j++; 
+        k++; 
+    } 
+} 
 
 void sort_vec(std::vector<int> &A, int p, int r) {
     if (r - p > K) {
@@ -130,39 +152,62 @@ void insertionSort_deq(std::deque<int> &A, int p, int q) {
     // System.out.println();
 }
 
-void merge_deq(std::deque<int> &A, int p, int q, int r) {
-    int n1 = q - p + 1;
-    int n2 = r - q;
-    // int[] LA = Arrays.copyOfRange(A, p, q +1);
-    std::deque<int> LA;
-	LA.resize(((q + 1) - p));
-	// memcpy(LA, A + p, sizeof(int) * ((q + 1) - p));
-    std::copy(A.begin() + p, A.begin() + ((q + 1)), LA.begin());
-	// int[] RA = Arrays.copyOfRange(A, q+1, r +1);
-    std::deque<int> RA;
-	RA.resize(((r + 1) - (q + 1)));
-	// memcpy(RA, A + (q + 1), sizeof(int) * ((r + 1) - (q + 1)));
-    std::copy(A.begin() + (q + 1), A.begin() + ((r + 1)), RA.begin());
 
-	// std::cout<< (q + 1) << "\n" << ((r + 1)) << "\n";
-	int RIDX = 0;
-    int LIDX = 0;
-    for (int i = p; i < r - p + 1; i++) {
-        if (RIDX == n2) {
-            A[i] = LA[LIDX];
-            LIDX++;
-        } else if (LIDX == n1) {
-            A[i] = RA[RIDX];
-            RIDX++;
-        } else if (RA[RIDX] > LA[LIDX]) {
-            A[i] = LA[LIDX];
-            LIDX++;
-        } else {
-            A[i] = RA[RIDX];
-            RIDX++;
-        }
-    }
-}
+void merge_deq(std::deque<int> &arr, int l, int m, int r) 
+{ 
+	// std::cout << "merged\n";
+    int i, j, k; 
+    int n1 = m - l + 1; 
+    int n2 = r - m; 
+  
+    // Create temp arrays 
+    int L[n1], R[n2]; 
+  
+    // Copy data to temp arrays 
+    // L[] and R[] 
+    for (i = 0; i < n1; i++) 
+        L[i] = arr[l + i]; 
+    for (j = 0; j < n2; j++) 
+        R[j] = arr[m + 1 + j]; 
+  
+    // Merge the temp arrays back 
+    // into arr[l..r] 
+    // Initial index of first subarray 
+    i = 0; 
+  
+    // Initial index of second subarray 
+    j = 0; 
+  
+    // Initial index of merged subarray 
+    k = l; 
+    while (i < n1 && j < n2) { 
+        if (L[i] <= R[j]) { 
+            arr[k] = L[i]; 
+            i++; 
+        } 
+        else { 
+            arr[k] = R[j]; 
+            j++; 
+        } 
+        k++; 
+    } 
+  
+    // Copy the remaining elements 
+    // of L[], if there are any 
+    while (i < n1) { 
+        arr[k] = L[i]; 
+        i++; 
+        k++; 
+    } 
+  
+    // Copy the remaining elements of 
+    // R[], if there are any 
+    while (j < n2) { 
+        arr[k] = R[j]; 
+        j++; 
+        k++; 
+    } 
+} 
 
 void sort_deq(std::deque<int> &A, int p, int r) {
     if (r - p > K) {
